@@ -321,6 +321,7 @@ enum {
   EM_VE = 251,            // NEC SX-Aurora VE
   EM_CSKY = 252,          // C-SKY 32-bit processor
   EM_LOONGARCH = 258,     // LoongArch
+  EM_ETHER = 353,         // Ether microcontroller
 };
 
 // Object file classes.
@@ -1037,6 +1038,22 @@ enum : unsigned {
 // ELF Relocation types for Xtensa
 enum {
 #include "ELFRelocs/Xtensa.def"
+};
+
+// Ether Specific e_flags
+enum : unsigned {
+  // Let's be optimistic and hope that family will have more machines
+  EF_ETHER_MACH = 0x00F0,      // Mask for machine type
+  EF_ETHER_MACH_NONE = 0x0000, // Base Ether implementation
+
+  // Extensions
+  EF_ETHER_EXT_MUL = 0x0001, // Indicates presence of hardware multiply
+  EF_ETHER_EXT_DIV = 0x0002  // Indicates presence of hardware division
+};
+
+// ELF Relocation types for Ether
+enum {
+#include "ELFRelocs/Ether.def"
 };
 
 #undef ELF_RELOC

@@ -1198,6 +1198,7 @@ const EnumEntry<unsigned> ElfMachineType[] = {
   ENUM_ENT(EM_OPENRISC,      "OpenRISC 32-bit embedded processor"),
   ENUM_ENT(EM_ARC_COMPACT,   "EM_ARC_COMPACT"),
   ENUM_ENT(EM_XTENSA,        "Tensilica Xtensa Processor"),
+  ENUM_ENT(EM_ETHER,         "Ether microcontroller"),
   ENUM_ENT(EM_VIDEOCORE,     "Alphamosaic VideoCore processor"),
   ENUM_ENT(EM_TMM_GPP,       "Thompson Multimedia General Purpose Processor"),
   ENUM_ENT(EM_NS32K,         "National Semiconductor 32000 series"),
@@ -1729,6 +1730,12 @@ static const EnumEntry<unsigned> ElfHeaderXtensaFlags[] = {
   LLVM_READOBJ_ENUM_ENT(ELF, EF_XTENSA_MACH_NONE),
   LLVM_READOBJ_ENUM_ENT(ELF, EF_XTENSA_XT_INSN),
   LLVM_READOBJ_ENUM_ENT(ELF, EF_XTENSA_XT_LIT)
+};
+
+const EnumEntry<unsigned> ElfHeaderEtherFlags[] = {
+  LLVM_READOBJ_ENUM_ENT(ELF, EF_ETHER_MACH_NONE),
+  LLVM_READOBJ_ENUM_ENT(ELF, EF_ETHER_EXT_MUL),
+  LLVM_READOBJ_ENUM_ENT(ELF, EF_ETHER_EXT_DIV)
 };
 
 const EnumEntry<unsigned> ElfSymOtherFlags[] = {
@@ -3649,6 +3656,9 @@ template <class ELFT> void GNUELFDumper<ELFT>::printFileHeaders() {
   else if (e.e_machine == EM_XTENSA)
     ElfFlags = printFlags(e.e_flags, ArrayRef(ElfHeaderXtensaFlags),
                           unsigned(ELF::EF_XTENSA_MACH));
+  else if (e.e_machine == EM_ETHER)
+    ElfFlags = printFlags(e.e_flags, ArrayRef(ElfHeaderEtherFlags),
+                          unsigned(ELF::EF_ETHER_MACH));
   else if (e.e_machine == EM_CUDA)
     ElfFlags = printFlags(e.e_flags, ArrayRef(ElfHeaderNVPTXFlags),
                           unsigned(ELF::EF_CUDA_SM));

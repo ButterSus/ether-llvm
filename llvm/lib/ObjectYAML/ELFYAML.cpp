@@ -272,6 +272,7 @@ void ScalarEnumerationTraits<ELFYAML::ELF_EM>::enumeration(
   ECase(EM_OPENRISC);
   ECase(EM_ARC_COMPACT);
   ECase(EM_XTENSA);
+  ECase(EM_ETHER);
   ECase(EM_VIDEOCORE);
   ECase(EM_TMM_GPP);
   ECase(EM_NS32K);
@@ -565,6 +566,11 @@ void ScalarBitSetTraits<ELFYAML::ELF_EF>::bitset(IO &IO,
     BCase(EF_XTENSA_XT_INSN);
     BCaseMask(EF_XTENSA_MACH_NONE, EF_XTENSA_MACH);
     BCase(EF_XTENSA_XT_LIT);
+    break;
+  case ELF::EM_ETHER:
+    BCaseMask(EF_ETHER_MACH_NONE, EF_ETHER_MACH);
+    BCase(EF_ETHER_EXT_MUL);
+    BCase(EF_ETHER_EXT_DIV);
     break;
   case ELF::EM_AMDGPU:
     BCaseMask(EF_AMDGPU_MACH_NONE, EF_AMDGPU_MACH);
@@ -955,6 +961,9 @@ void ScalarEnumerationTraits<ELFYAML::ELF_REL>::enumeration(
     break;
   case ELF::EM_XTENSA:
 #include "llvm/BinaryFormat/ELFRelocs/Xtensa.def"
+    break;
+  case ELF::EM_ETHER:
+#include "llvm/BinaryFormat/ELFRelocs/Ether.def"
     break;
   default:
     // Nothing to do.
